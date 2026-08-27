@@ -78,6 +78,36 @@
   }
   .section-title span.max{font-size:13px;color:var(--sub);font-weight:400;}
 
+  .criteria-box{margin:10px 0 4px;}
+  .criteria-box summary{
+    cursor:pointer;font-size:13px;color:var(--purple);font-weight:500;
+    list-style:none;display:inline-flex;align-items:center;gap:4px;
+    padding:4px 0;
+  }
+  .criteria-box summary::-webkit-details-marker{display:none;}
+  .criteria-box summary::before{
+    content:'▸';display:inline-block;transition:transform .15s;
+  }
+  .criteria-box[open] summary::before{transform:rotate(90deg);}
+  .criteria-table{
+    margin-top:8px;border:1px solid var(--line);border-radius:6px;overflow:hidden;
+  }
+  .criteria-row{
+    display:flex;gap:12px;padding:8px 12px;font-size:12.5px;line-height:1.5;
+    border-bottom:1px solid #eee;
+  }
+  .criteria-row:last-child{border-bottom:none;}
+  .criteria-row .cscore{
+    flex:0 0 22px;font-weight:700;text-align:center;border-radius:50%;
+    width:22px;height:22px;line-height:22px;font-size:12px;color:#fff;
+  }
+  .criteria-row .ctext{flex:1;color:var(--text);}
+  .cscore.s5{background:#1e8e3e;}
+  .cscore.s4{background:#7cb342;}
+  .cscore.s3{background:var(--warn);}
+  .cscore.s2{background:#f4511e;}
+  .cscore.s1{background:var(--bad);}
+
   .item{padding:16px 0;border-bottom:1px solid #eee;}
   .item:last-child{border-bottom:none;}
   .item-top{display:flex;gap:10px;align-items:baseline;}
@@ -182,7 +212,7 @@
 
   <div class="card">
     <div class="meta-row">
-      <div class="meta-field"><label>ชื่อพื้นที่</label><input type="text" id="area" placeholder="ระบุพื้นที่ เช่น ห้องชั่ง 1"></div>
+      <div class="meta-field"><label>ชื่อพื้นที่</label><input type="text" id="area" placeholder="ระบุพื้นที่ เช่น ห้องชั่ง 1" value="ห้องชั่ง 1"></div>
       <div class="meta-field"><label>วันที่</label><input type="date" id="date"></div>
     </div>
     <div class="meta-row" style="margin-top:14px;">
@@ -196,6 +226,16 @@
   <!-- SECTION A -->
   <div class="card" data-section="A">
     <div class="section-title">A. ความสะอาดและสภาพแวดล้อมภายในห้อง <span class="max">คะแนนเต็ม 25</span></div>
+    <details class="criteria-box">
+      <summary>ดูเกณฑ์การให้คะแนน (A — ความสะอาดและความปลอดภัยของพื้นที่)</summary>
+      <div class="criteria-table">
+        <div class="criteria-row"><span class="cscore s5">5</span><span class="ctext">พื้นที่สะอาด เป็นระเบียบ ไม่มีเศษเชื้อเพลิง ฝุ่น ดินโคลน ขยะ หรือตะกอนสะสม และไม่พบจุดเสี่ยงด้านความปลอดภัย</span></div>
+        <div class="criteria-row"><span class="cscore s4">4</span><span class="ctext">พื้นที่สะอาดและเป็นระเบียบ พบสิ่งสกปรกหรือข้อบกพร่องเล็กน้อย 1-2 จุด ไม่ส่งผลต่อการปฏิบัติงาน</span></div>
+        <div class="criteria-row"><span class="cscore s3">3</span><span class="ctext">พบสิ่งสกปรกหรือความไม่เป็นระเบียบบางจุด ต้องดำเนินการทำความสะอาดหรือแก้ไข</span></div>
+        <div class="criteria-row"><span class="cscore s2">2</span><span class="ctext">พบสิ่งสกปรกสะสมหลายจุด หรือพบสภาพไม่ปลอดภัยบางส่วน แสดงถึงการละเลย</span></div>
+        <div class="criteria-row"><span class="cscore s1">1</span><span class="ctext">สกปรกมาก มีของเสียสะสมจำนวนมาก หรือพบสภาพไม่ปลอดภัย ต้องแก้ไขเร่งด่วน</span></div>
+      </div>
+    </details>
 
     <div class="item" data-item="1">
       <div class="item-top"><span class="item-num">1</span><span class="item-title">พื้นห้องชั่งสะอาด ไม่มีฝุ่น คราบสกปรก หรือสิ่งตกค้าง</span></div>
@@ -223,6 +263,16 @@
   <!-- SECTION B -->
   <div class="card" data-section="B">
     <div class="section-title">B. อุปกรณ์และเครื่องมือปฏิบัติงาน <span class="max">คะแนนเต็ม 35</span></div>
+    <details class="criteria-box">
+      <summary>ดูเกณฑ์การให้คะแนน (B — สภาพความพร้อมใช้งานของอุปกรณ์)</summary>
+      <div class="criteria-table">
+        <div class="criteria-row"><span class="cscore s5">5</span><span class="ctext">อุปกรณ์ทุกชนิดสะอาด สมบูรณ์พร้อมใช้งาน และแสดงผลได้ถูกต้อง</span></div>
+        <div class="criteria-row"><span class="cscore s4">4</span><span class="ctext">อุปกรณ์ส่วนใหญ่สะอาด พบฝุ่นหรือคราบเล็กน้อย ไม่มีผลต่อการใช้งาน</span></div>
+        <div class="criteria-row"><span class="cscore s3">3</span><span class="ctext">พบฝุ่น คราบสกปรก หรือข้อบกพร่องบางส่วน แต่ยังสามารถใช้งานได้ตามปกติ</span></div>
+        <div class="criteria-row"><span class="cscore s2">2</span><span class="ctext">พบสิ่งสกปรกสะสม หรืออุปกรณ์บางรายการทำงานไม่สมบูรณ์ ต้องติดตามแก้ไข</span></div>
+        <div class="criteria-row"><span class="cscore s1">1</span><span class="ctext">อุปกรณ์สกปรกมาก ชำรุด หรือไม่พร้อมใช้งาน ส่งผลกระทบต่อการปฏิบัติงาน</span></div>
+      </div>
+    </details>
     <div class="item" data-item="6">
       <div class="item-top"><span class="item-num">6</span><span class="item-title">คอมพิวเตอร์เครื่องชั่ง (หลัก) อยู่ในสภาพพร้อมใช้งาน ใช้งานได้ตามปกติ ไม่พบปัญหาคอมค้าง ช้า หรือระบบเครือข่ายขัดข้อง</span></div>
       <div class="scale"></div>
@@ -257,6 +307,16 @@
   <!-- SECTION C -->
   <div class="card" data-section="C">
     <div class="section-title">C. การจัดระเบียบและมาตรฐานพื้นที่ทำงาน <span class="max">คะแนนเต็ม 15</span></div>
+    <details class="criteria-box">
+      <summary>ดูเกณฑ์การให้คะแนน (C — การจัดเก็บเอกสารและข้อมูล)</summary>
+      <div class="criteria-table">
+        <div class="criteria-row"><span class="cscore s5">5</span><span class="ctext">เอกสาร อุปกรณ์ และข้อมูลต่าง ๆ จัดเก็บเป็นระเบียบ มีป้ายกำกับครบถ้วนเป็นปัจจุบัน และสามารถค้นหาได้ทันที</span></div>
+        <div class="criteria-row"><span class="cscore s4">4</span><span class="ctext">จัดเก็บเป็นระเบียบ พบข้อบกพร่องเล็กน้อย แต่ไม่กระทบการใช้งาน</span></div>
+        <div class="criteria-row"><span class="cscore s3">3</span><span class="ctext">มีการจัดเก็บและค้นหาได้ แต่ยังไม่เป็นระเบียบบางส่วน</span></div>
+        <div class="criteria-row"><span class="cscore s2">2</span><span class="ctext">การจัดเก็บไม่เป็นระเบียบ ป้ายกำกับไม่ครบ หรือข้อมูลไม่เป็นปัจจุบัน</span></div>
+        <div class="criteria-row"><span class="cscore s1">1</span><span class="ctext">ไม่มีระบบการจัดเก็บ หรือไม่สามารถค้นหาเอกสารและอุปกรณ์ได้</span></div>
+      </div>
+    </details>
 
     <div class="item" data-item="13">
       <div class="item-top"><span class="item-num">13</span><span class="item-title">เอกสารและแบบฟอร์มจัดเก็บเป็นหมวดหมู่ ค้นหาได้ง่าย</span></div>
@@ -282,6 +342,16 @@
 
   <div class="card" data-section="D">
     <div class="section-title">รายการตรวจเช็กพื้นที่ภายนอก <span class="max" data-section-max="D">คะแนนเต็ม 20</span></div>
+    <details class="criteria-box">
+      <summary>ดูเกณฑ์การให้คะแนน (ความสะอาดและความปลอดภัยของพื้นที่)</summary>
+      <div class="criteria-table">
+        <div class="criteria-row"><span class="cscore s5">5</span><span class="ctext">พื้นที่สะอาด เป็นระเบียบ ไม่มีเศษเชื้อเพลิง ฝุ่น ดินโคลน ขยะ หรือตะกอนสะสม และไม่พบจุดเสี่ยงด้านความปลอดภัย</span></div>
+        <div class="criteria-row"><span class="cscore s4">4</span><span class="ctext">พื้นที่สะอาดและเป็นระเบียบ พบสิ่งสกปรกหรือข้อบกพร่องเล็กน้อย 1-2 จุด ไม่ส่งผลต่อการปฏิบัติงาน</span></div>
+        <div class="criteria-row"><span class="cscore s3">3</span><span class="ctext">พบสิ่งสกปรกหรือความไม่เป็นระเบียบบางจุด ต้องดำเนินการทำความสะอาดหรือแก้ไข</span></div>
+        <div class="criteria-row"><span class="cscore s2">2</span><span class="ctext">พบสิ่งสกปรกสะสมหลายจุด หรือพบสภาพไม่ปลอดภัยบางส่วน แสดงถึงการละเลย</span></div>
+        <div class="criteria-row"><span class="cscore s1">1</span><span class="ctext">สกปรกมาก มีของเสียสะสมจำนวนมาก หรือพบสภาพไม่ปลอดภัย ต้องแก้ไขเร่งด่วน</span></div>
+      </div>
+    </details>
 
     <div class="item" data-item="16">
       <div class="item-top"><span class="item-num">1</span><span class="item-title">หลังคาและโครงหลังคาบริเวณหน้าห้องชั่งสะอาด ไม่มีฝุ่น ใยแมงมุม หรือคราบสกปรก</span></div>
@@ -323,7 +393,7 @@
 
   <div class="note">
     หมายเหตุ: กรณีประเมินได้ 3 คะแนน หรือต่ำกว่า ผู้ตรวจประเมินต้องระบุรายละเอียดข้อบกพร่อง และสามารถถ่ายรูปหรือแนบรูปประกอบได้<br>
-    เกณฑ์ (คิดเป็นร้อยละของคะแนนเต็มที่ประเมินจริง): 90–100% = ดีเยี่ยม (ผ่านมาตรฐาน) &nbsp;|&nbsp; 80–89% = ดี (ผ่านมาตรฐาน) &nbsp;|&nbsp; 70–79% = พอใช้ (ควรปรับปรุง) &nbsp;|&nbsp; ต่ำกว่า 70% = ไม่ผ่านมาตรฐาน (ควรปรับปรุงเร่งด่วน)
+    เกณฑ์ (คิดเป็นร้อยละของคะแนนเต็มที่ประเมินจริง): 86–95 = ดีเยี่ยม (ผ่านมาตรฐาน) &nbsp;|&nbsp; 76–85 = ดี (ผ่านมาตรฐาน) &nbsp;|&nbsp; 67–75 = พอใช้ (ควรปรับปรุง) &nbsp;|&nbsp; ต่ำกว่า 67 = ไม่ผ่านมาตรฐาน (ควรปรับปรุงเร่งด่วน)
   </div>
 
   <button id="submitBtn" style="
