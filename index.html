@@ -112,6 +112,14 @@
     resize:vertical;
   }
 
+  .na-fixed-note{
+    margin:6px 0 0 32px;
+    display:inline-block;
+    font-size:13px;color:var(--sub);
+    background:#f1f3f4;border-left:3px solid var(--sub);border-radius:4px;
+    padding:8px 12px;
+  }
+
   .photo-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
   .photo-btn{
     display:inline-flex;align-items:center;gap:6px;
@@ -270,14 +278,14 @@
   </div>
 
   <!-- ===================== ส่วนที่ 2 : พื้นที่ภายนอกห้องชั่ง ===================== -->
-  <div class="part-header">ส่วนที่ 2 — พื้นที่ภายนอกห้องชั่ง <span class="part-max">คะแนนเต็ม 25 คะแนน</span></div>
+  <div class="part-header">ส่วนที่ 2 — พื้นที่ภายนอกห้องชั่ง <span class="part-max" data-part-max="2">คะแนนเต็ม 20 คะแนน</span></div>
 
   <div class="card" data-section="D">
-    <div class="section-title">รายการตรวจเช็กพื้นที่ภายนอก <span class="max">คะแนนเต็ม 25</span></div>
+    <div class="section-title">รายการตรวจเช็กพื้นที่ภายนอก <span class="max" data-section-max="D">คะแนนเต็ม 20</span></div>
 
     <div class="item" data-item="16">
       <div class="item-top"><span class="item-num">1</span><span class="item-title">หลังคาและโครงหลังคาบริเวณหน้าห้องชั่งสะอาด ไม่มีฝุ่น ใยแมงมุม หรือคราบสกปรก</span></div>
-      <div class="scale"></div>
+      <div class="na-fixed-note">อยู่ระหว่างการปรับปรุง (ไม่ต้องประเมิน)</div>
     </div>
     <div class="item" data-item="17">
       <div class="item-top"><span class="item-num">2</span><span class="item-title">บริเวณรอบเครื่องชั่งสะอาด ไม่มีเศษเชื้อเพลิง ดินโคลน หรือสิ่งสกปรกตกค้าง</span></div>
@@ -295,14 +303,14 @@
       <div class="item-top"><span class="item-num">5</span><span class="item-title">บริเวณด้านหลังห้องชั่งและแนวท่อน้ำดับเพลิงสะอาด ไม่มีเศษวัสดุ ดินโคลน หรือสิ่งของสะสม</span></div>
       <div class="scale"></div>
     </div>
-    <div class="subtotal">คะแนนรวมพื้นที่ภายนอก: <span data-subtotal="D">0</span> / 25</div>
+    <div class="subtotal">คะแนนรวมพื้นที่ภายนอก: <span data-subtotal="D">0</span> / <span data-section-max-inline="D">20</span></div>
   </div>
 
   <div class="summary">
     <h2>สรุปผลการตรวจ</h2>
     <div class="score-line"><span>ส่วนที่ 1 — ภายในห้องชั่ง (เต็ม 75)</span><span data-subtotal="PART1B">0</span></div>
-    <div class="score-line"><span>ส่วนที่ 2 — ภายนอกห้องชั่ง (เต็ม 25)</span><span data-subtotal="PART2B">0</span></div>
-    <div class="score-line total"><span>คะแนนรวมทั้งหมด (เต็ม 100)</span><span data-total>0</span></div>
+    <div class="score-line"><span>ส่วนที่ 2 — ภายนอกห้องชั่ง (เต็ม <span data-part2-max-inline>20</span>)</span><span data-subtotal="PART2B">0</span></div>
+    <div class="score-line total"><span>คะแนนรวมทั้งหมด (เต็ม <span data-grand-max-inline>95</span>)</span><span data-total>0</span></div>
     <div class="grade-box grade-pending" data-grade>กรุณาให้คะแนนครบทุกข้อ</div>
   </div>
 
@@ -315,7 +323,7 @@
 
   <div class="note">
     หมายเหตุ: กรณีประเมินได้ 3 คะแนน หรือต่ำกว่า ผู้ตรวจประเมินต้องระบุรายละเอียดข้อบกพร่อง และสามารถถ่ายรูปหรือแนบรูปประกอบได้<br>
-    เกณฑ์ (จากคะแนนเต็ม 100): 90–100 = ดีเยี่ยม (ผ่านมาตรฐาน) &nbsp;|&nbsp; 80–89 = ดี (ผ่านมาตรฐาน) &nbsp;|&nbsp; 70–79 = พอใช้ (ควรปรับปรุง) &nbsp;|&nbsp; ต่ำกว่า 70 = ไม่ผ่านมาตรฐาน (ควรปรับปรุงเร่งด่วน)
+    เกณฑ์ (คิดเป็นร้อยละของคะแนนเต็มที่ประเมินจริง): 90–100% = ดีเยี่ยม (ผ่านมาตรฐาน) &nbsp;|&nbsp; 80–89% = ดี (ผ่านมาตรฐาน) &nbsp;|&nbsp; 70–79% = พอใช้ (ควรปรับปรุง) &nbsp;|&nbsp; ต่ำกว่า 70% = ไม่ผ่านมาตรฐาน (ควรปรับปรุงเร่งด่วน)
   </div>
 
   <button id="submitBtn" style="
@@ -346,8 +354,13 @@
 
 
 <script>
+// ข้อ 16 (หลังคา) ถูกกำหนดให้เป็น "ไม่ต้องประเมิน" ถาวร เนื่องจากอยู่ระหว่างการปรับปรุง
+const NA_ITEMS = new Set(['16']);
+
 document.querySelectorAll('.item').forEach(item=>{
   const id = item.dataset.item;
+  if(NA_ITEMS.has(id)) return; // ข้อที่ไม่ต้องประเมิน ไม่ต้องสร้างช่องให้คะแนน/รายละเอียด
+
   const scale = item.querySelector('.scale');
   for(let i=1;i<=5;i++){
     const lab = document.createElement('label');
@@ -444,6 +457,7 @@ document.addEventListener('click', e=>{
 function toggleDetailPanels(){
   document.querySelectorAll('.item').forEach(item=>{
     const id = item.dataset.item;
+    if(NA_ITEMS.has(id)) return; // ข้อที่ไม่ต้องประเมินไม่ต้องโชว์กล่องข้อบกพร่อง
     const checked = document.querySelector(`input[name="q${id}"]:checked`);
     const panel = document.querySelector(`[data-detail-for="${id}"]`);
     if(checked && Number(checked.value) <= 3){
@@ -455,58 +469,84 @@ function toggleDetailPanels(){
 }
 
 const SECTIONS = {A:[1,2,3,4,5], B:[6,7,8,9,10,11,12], C:[13,14,15], D:[16,17,18,19,20]};
-const TOTAL_ITEMS = 20;
-const PART1_MAX = 75;
-const PART2_MAX = 25;
-const GRAND_MAX = 100;
+
+function activeIds(ids){
+  return ids.filter(id => !NA_ITEMS.has(String(id)));
+}
 
 function recalc(){
   let grandTotal = 0;
   let answeredCount = 0;
+  let requiredCount = 0;
 
   for(const [sec, ids] of Object.entries(SECTIONS)){
     let subtotal = 0;
-    ids.forEach(id=>{
+    const active = activeIds(ids);
+    active.forEach(id=>{
       const checked = document.querySelector(`input[name="q${id}"]:checked`);
       if(checked){
         subtotal += Number(checked.value);
         answeredCount++;
       }
     });
+    requiredCount += active.length;
     document.querySelector(`[data-subtotal="${sec}"]`).textContent = subtotal;
     grandTotal += subtotal;
   }
 
-  const part1Total = SECTIONS.A.concat(SECTIONS.B, SECTIONS.C).reduce((sum,id)=>{
+  const part1Ids = activeIds(SECTIONS.A.concat(SECTIONS.B, SECTIONS.C));
+  const part2Ids = activeIds(SECTIONS.D);
+
+  const part1Total = part1Ids.reduce((sum,id)=>{
     const checked = document.querySelector(`input[name="q${id}"]:checked`);
     return sum + (checked ? Number(checked.value) : 0);
   },0);
-  const part2Total = SECTIONS.D.reduce((sum,id)=>{
+  const part2Total = part2Ids.reduce((sum,id)=>{
     const checked = document.querySelector(`input[name="q${id}"]:checked`);
     return sum + (checked ? Number(checked.value) : 0);
   },0);
+
+  const part1Max = part1Ids.length * 5;
+  const part2Max = part2Ids.length * 5;
+  const dMax = activeIds(SECTIONS.D).length * 5;
+  const grandMaxActual = part1Max + part2Max;
 
   document.querySelector('[data-subtotal="PART1"]').textContent = part1Total;
   document.querySelector('[data-subtotal="PART1B"]').textContent = part1Total;
   document.querySelector('[data-subtotal="PART2B"]').textContent = part2Total;
   document.querySelector('[data-total]').textContent = grandTotal;
+
+  const dMaxInline = document.querySelector('[data-section-max-inline="D"]');
+  if(dMaxInline) dMaxInline.textContent = dMax;
+  const dMaxLabel = document.querySelector('[data-section-max="D"]');
+  if(dMaxLabel) dMaxLabel.textContent = `คะแนนเต็ม ${dMax}`;
+  const partMax2 = document.querySelector('[data-part-max="2"]');
+  if(partMax2) partMax2.textContent = `คะแนนเต็ม ${part2Max} คะแนน`;
+  const part2MaxInline = document.querySelector('[data-part2-max-inline]');
+  if(part2MaxInline) part2MaxInline.textContent = part2Max;
+  const grandMaxInline = document.querySelector('[data-grand-max-inline]');
+  if(grandMaxInline) grandMaxInline.textContent = grandMaxActual;
+
   toggleDetailPanels();
 
   const gradeBox = document.querySelector('[data-grade]');
-  if(answeredCount < TOTAL_ITEMS){
+  if(answeredCount < requiredCount){
     gradeBox.className = 'grade-box grade-pending';
-    gradeBox.textContent = `กรุณาให้คะแนนอีก ${TOTAL_ITEMS - answeredCount} ข้อ`;
+    gradeBox.textContent = `กรุณาให้คะแนนอีก ${requiredCount - answeredCount} ข้อ`;
     return;
   }
-  if(grandTotal >= 90){ gradeBox.className='grade-box grade-1'; gradeBox.textContent='ดีเยี่ยม (ผ่านมาตรฐาน)'; }
-  else if(grandTotal >= 80){ gradeBox.className='grade-box grade-2'; gradeBox.textContent='ดี (ผ่านมาตรฐาน)'; }
-  else if(grandTotal >= 70){ gradeBox.className='grade-box grade-3'; gradeBox.textContent='พอใช้ (ควรปรับปรุง)'; }
+  const percentage = grandMaxActual > 0 ? (grandTotal / grandMaxActual) * 100 : 0;
+  if(percentage >= 90){ gradeBox.className='grade-box grade-1'; gradeBox.textContent='ดีเยี่ยม (ผ่านมาตรฐาน)'; }
+  else if(percentage >= 80){ gradeBox.className='grade-box grade-2'; gradeBox.textContent='ดี (ผ่านมาตรฐาน)'; }
+  else if(percentage >= 70){ gradeBox.className='grade-box grade-3'; gradeBox.textContent='พอใช้ (ควรปรับปรุง)'; }
   else{ gradeBox.className='grade-box grade-4'; gradeBox.textContent='ไม่ผ่านมาตรฐาน (ควรปรับปรุงเร่งด่วน)'; }
 }
 
 document.addEventListener('change', e=>{
   if(e.target.type==='radio') recalc();
 });
+
+recalc();
 
 // ==================== ส่วนส่งข้อมูลเข้า Google Sheet ====================
 // แก้ URL นี้เป็น Web app URL ที่ได้จากการ Deploy Apps Script
@@ -517,18 +557,25 @@ document.getElementById('submitBtn').addEventListener('click', async ()=>{
   try {
     const items = {};
     let answeredCount = 0;
+    let requiredCount = 0;
 
     for(const ids of Object.values(SECTIONS)){
+      const active = activeIds(ids);
+      requiredCount += active.length;
       ids.forEach(id=>{
+        if(NA_ITEMS.has(String(id))){
+          items[id] = "NA";
+          return;
+        }
         const checked = document.querySelector(`input[name="q${id}"]:checked`);
         items[id] = checked ? Number(checked.value) : "";
         if(checked) answeredCount++;
       });
     }
 
-    if(answeredCount < TOTAL_ITEMS){
+    if(answeredCount < requiredCount){
       statusMsg.style.color = 'var(--bad)';
-      statusMsg.textContent = `กรุณาให้คะแนนให้ครบทั้ง ${TOTAL_ITEMS} ข้อก่อนส่งฟอร์ม`;
+      statusMsg.textContent = `กรุณาให้คะแนนให้ครบทั้ง ${requiredCount} ข้อก่อนส่งฟอร์ม`;
       return;
     }
 
@@ -537,7 +584,7 @@ document.getElementById('submitBtn').addEventListener('click', async ()=>{
     let missingDetail = null;
 
     for(const [id, score] of Object.entries(items)){
-      if(score !== "" && score <= 3){
+      if(score !== "" && score !== "NA" && score <= 3){
         const defectEl = document.querySelector(`textarea[data-field="defect"][data-item="${id}"]`);
         const defect = defectEl ? defectEl.value.trim() : "";
         if(!defect){
@@ -554,16 +601,23 @@ document.getElementById('submitBtn').addEventListener('click', async ()=>{
       return;
     }
 
+    // รายการข้อที่ไม่ต้องประเมิน (คงที่) — ไม่มีช่องหมายเหตุให้กรอกเพิ่ม จึงไม่ต้องตรวจสอบ
+    const naLines = Array.from(NA_ITEMS).map(id => `ข้อ ${id} — อยู่ระหว่างการปรับปรุง (ไม่ต้องประเมิน)`);
+
     // รวบรวมรูปที่แนบไว้ เฉพาะข้อที่คะแนน ≤ 3
     const photoData = {};
     for(const [id, score] of Object.entries(items)){
-      if(score !== "" && score <= 3 && itemPhotos[id]){
+      if(score !== "" && score !== "NA" && score <= 3 && itemPhotos[id]){
         photoData[id] = itemPhotos[id];
       }
     }
 
-    const part1Total = SECTIONS.A.concat(SECTIONS.B, SECTIONS.C).reduce((s,id)=>s+Number(items[id]||0),0);
-    const part2Total = SECTIONS.D.reduce((s,id)=>s+Number(items[id]||0),0);
+    const part1Ids = activeIds(SECTIONS.A.concat(SECTIONS.B, SECTIONS.C));
+    const part2Ids = activeIds(SECTIONS.D);
+    const part1Total = part1Ids.reduce((s,id)=>s+Number(items[id]||0),0);
+    const part2Total = part2Ids.reduce((s,id)=>s+Number(items[id]||0),0);
+    const part1Max = part1Ids.length * 5;
+    const part2Max = part2Ids.length * 5;
 
     const payload = {
       formType: "room1_2part",
@@ -571,13 +625,18 @@ document.getElementById('submitBtn').addEventListener('click', async ()=>{
       date: document.getElementById('date').value,
       inspector: document.getElementById('inspector').value,
       items: items,
+      naItems: Array.from(NA_ITEMS),
+      naRemarks: naLines.join('\n'),
       subtotalA: Number(document.querySelector('[data-subtotal="A"]').textContent),
       subtotalB: Number(document.querySelector('[data-subtotal="B"]').textContent),
       subtotalC: Number(document.querySelector('[data-subtotal="C"]').textContent),
       subtotalD: Number(document.querySelector('[data-subtotal="D"]').textContent),
       part1Total: part1Total,
+      part1Max: part1Max,
       part2Total: part2Total,
+      part2Max: part2Max,
       total: Number(document.querySelector('[data-total]').textContent),
+      totalMax: part1Max + part2Max,
       grade: document.querySelector('[data-grade]').textContent,
       suggestion: document.getElementById('suggestion').value,
       itemDetails: detailLines.join('\n'),
