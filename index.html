@@ -514,78 +514,79 @@ const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwB7oZkGloVbkof
 
 document.getElementById('submitBtn').addEventListener('click', async ()=>{
   const statusMsg = document.getElementById('statusMsg');
-  const items = {};
-  let answeredCount = 0;
-
-  for(const ids of Object.values(SECTIONS)){
-    ids.forEach(id=>{
-      const checked = document.querySelector(`input[name="q${id}"]:checked`);
-      items[id] = checked ? Number(checked.value) : "";
-      if(checked) answeredCount++;
-    });
-  }
-
-  if(answeredCount < TOTAL_ITEMS){
-    statusMsg.style.color = 'var(--bad)';
-    statusMsg.textContent = `กรุณาให้คะแนนให้ครบทั้ง ${TOTAL_ITEMS} ข้อก่อนส่งฟอร์ม`;
-    return;
-  }
-
-  // รวบรวมรายละเอียดข้อบกพร่องเฉพาะข้อที่คะแนน ≤ 3 และตรวจว่ากรอกครบหรือยัง
-  const detailLines = [];
-  let missingDetail = null;
-
-  for(const [id, score] of Object.entries(items)){
-    if(score !== "" && score <= 3){
-      const defect = document.querySelector(`textarea[data-field="defect"][data-item="${id}"]`).value.trim();
-      if(!defect){
-        missingDetail = id;
-        break;
-      }
-      detailLines.push(`ข้อ ${id} (คะแนน ${score}) — รายละเอียดข้อบกพร่อง: ${defect}`);
-    }
-  }
-
-  if(missingDetail){
-    statusMsg.style.color = 'var(--bad)';
-    statusMsg.textContent = `กรุณากรอกรายละเอียดข้อบกพร่องของข้อ ${missingDetail} (คะแนน ≤ 3 ต้องระบุ)`;
-    return;
-  }
-
-  // รวบรวมรูปที่แนบไว้ เฉพาะข้อที่คะแนน ≤ 3
-  const photoData = {};
-  for(const [id, score] of Object.entries(items)){
-    if(score !== "" && score <= 3 && itemPhotos[id]){
-      photoData[id] = itemPhotos[id];
-    }
-  }
-
-  const part1Total = SECTIONS.A.concat(SECTIONS.B, SECTIONS.C).reduce((s,id)=>s+Number(items[id]||0),0);
-  const part2Total = SECTIONS.D.reduce((s,id)=>s+Number(items[id]||0),0);
-
-  const payload = {
-    formType: "room1_2part",
-    area: document.getElementById('area').value,
-    date: document.getElementById('date').value,
-    inspector: document.getElementById('inspector').value,
-    items: items,
-    subtotalA: Number(document.querySelector('[data-subtotal="A"]').textContent),
-    subtotalB: Number(document.querySelector('[data-subtotal="B"]').textContent),
-    subtotalC: Number(document.querySelector('[data-subtotal="C"]').textContent),
-    subtotalD: Number(document.querySelector('[data-subtotal="D"]').textContent),
-    part1Total: part1Total,
-    part2Total: part2Total,
-    total: Number(document.querySelector('[data-total]').textContent),
-    grade: document.querySelector('[data-grade]').textContent,
-    suggestion: document.getElementById('suggestion').value,
-    itemDetails: detailLines.join('\n'),
-    itemPhotos: photoData
-  };
-
-  statusMsg.style.color = 'var(--sub)';
-  statusMsg.textContent = 'กำลังส่งข้อมูล...';
-
   try {
+    const items = {};
+    let answeredCount = 0;
+
+    for(const ids of Object.values(SECTIONS)){
+      ids.forEach(id=>{
+        const checked = document.querySelector(`input[name="q${id}"]:checked`);
+        items[id] = checked ? Number(checked.value) : "";
+        if(checked) answeredCount++;
+      });
+    }
+
+    if(answeredCount < TOTAL_ITEMS){
+      statusMsg.style.color = 'var(--bad)';
+      statusMsg.textContent = `กรุณาให้คะแนนให้ครบทั้ง ${TOTAL_ITEMS} ข้อก่อนส่งฟอร์ม`;
+      return;
+    }
+
+    // รวบรวมรายละเอียดข้อบกพร่องเฉพาะข้อที่คะแนน ≤ 3 และตรวจว่ากรอกครบหรือยัง
+    const detailLines = [];
+    let missingDetail = null;
+
+    for(const [id, score] of Object.entries(items)){
+      if(score !== "" && score <= 3){
+        const defectEl = document.querySelector(`textarea[data-field="defect"][data-item="${id}"]`);
+        const defect = defectEl ? defectEl.value.trim() : "";
+        if(!defect){
+          missingDetail = id;
+          break;
+        }
+        detailLines.push(`ข้อ ${id} (คะแนน ${score}) — รายละเอียดข้อบกพร่อง: ${defect}`);
+      }
+    }
+
+    if(missingDetail){
+      statusMsg.style.color = 'var(--bad)';
+      statusMsg.textContent = `กรุณากรอกรายละเอียดข้อบกพร่องของข้อ ${missingDetail} (คะแนน ≤ 3 ต้องระบุ)`;
+      return;
+    }
+
+    // รวบรวมรูปที่แนบไว้ เฉพาะข้อที่คะแนน ≤ 3
+    const photoData = {};
+    for(const [id, score] of Object.entries(items)){
+      if(score !== "" && score <= 3 && itemPhotos[id]){
+        photoData[id] = itemPhotos[id];
+      }
+    }
+
+    const part1Total = SECTIONS.A.concat(SECTIONS.B, SECTIONS.C).reduce((s,id)=>s+Number(items[id]||0),0);
+    const part2Total = SECTIONS.D.reduce((s,id)=>s+Number(items[id]||0),0);
+
+    const payload = {
+      formType: "room1_2part",
+      area: document.getElementById('area').value,
+      date: document.getElementById('date').value,
+      inspector: document.getElementById('inspector').value,
+      items: items,
+      subtotalA: Number(document.querySelector('[data-subtotal="A"]').textContent),
+      subtotalB: Number(document.querySelector('[data-subtotal="B"]').textContent),
+      subtotalC: Number(document.querySelector('[data-subtotal="C"]').textContent),
+      subtotalD: Number(document.querySelector('[data-subtotal="D"]').textContent),
+      part1Total: part1Total,
+      part2Total: part2Total,
+      total: Number(document.querySelector('[data-total]').textContent),
+      grade: document.querySelector('[data-grade]').textContent,
+      suggestion: document.getElementById('suggestion').value,
+      itemDetails: detailLines.join('\n'),
+      itemPhotos: photoData
+    };
+
+    statusMsg.style.color = 'var(--sub)';
+    statusMsg.textContent = 'กำลังส่งข้อมูล...';
+
     await fetch(APPS_SCRIPT_URL, {
       method: 'POST',
       mode: 'no-cors',
@@ -598,6 +599,7 @@ document.getElementById('submitBtn').addEventListener('click', async ()=>{
   } catch (err) {
     statusMsg.style.color = 'var(--bad)';
     statusMsg.textContent = 'เกิดข้อผิดพลาด: ' + err.message;
+    console.error(err);
   }
 });
 
